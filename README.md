@@ -2,6 +2,10 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+install nodejs
+
+run npm install 
+
 First, run the development server:
 
 ```bash
@@ -34,3 +38,24 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+Backend setup
+
+1- Install Mysql server and use the schema script to create database and tables (for local)
+2- Install python
+3- Run below command 
+pip install -r requirements.txt OR
+python -m pip install -r requirements.txt
+
+4- Run server 
+uvicorn backend.main:app --reload 
+OR
+python -m uvicorn backend.main:app --reload (from root folder )
+
+How to check if backend server is running or not 
+
+http://127.0.0.1:8000/docs OR http://localhost:8000/docs
+If above link shows API spec (swagger) that means backend serer is up and running
+
+Good luck!
