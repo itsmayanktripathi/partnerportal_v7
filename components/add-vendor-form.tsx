@@ -78,12 +78,21 @@ export function AddVendorForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const response = await fetch('http://localhost:8000/vendors', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      if (!response.ok) {
+        throw new Error('Failed to add vendor')
+      }
       setIsLoading(false)
-      router.push("/dashboard/vendors")
-    }, 1500)
+      router.push('/dashboard/vendors')
+    } catch (error) {
+      setIsLoading(false)
+      alert('Error adding vendor: ' + (error as Error).message)
+    }
   }
 
   return (
