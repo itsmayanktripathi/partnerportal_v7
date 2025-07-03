@@ -1,4 +1,4 @@
-import { EditVendorForm } from "@/components/edit-vendor-form"
+import { EditVendorForm } from "@/components/vendor/edit-vendor-form"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"

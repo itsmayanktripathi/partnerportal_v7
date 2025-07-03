@@ -1,4 +1,4 @@
-import { AdminDashboard } from "@/components/admin-dashboard"
+import { AdminDashboard } from "@/components/admin/admin-dashboard"
 import { Settings, Users, Shield, Palette } from "lucide-react"
 import Link from "next/link"
 

@@ -1,4 +1,4 @@
-import { MassAddItems } from "@/components/mass-add-items"
+import { MassAddItems } from "@/components/item/mass-add-items"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"

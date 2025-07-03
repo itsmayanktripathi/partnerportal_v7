@@ -1,4 +1,4 @@
-import { BulkCostUpload } from "@/components/bulk-cost-upload"
+import { BulkCostUpload } from "@/components/cost-deal/bulk-cost-upload"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"

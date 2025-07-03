@@ -1,4 +1,4 @@
-import { VendorOnboardingFlow } from "@/components/vendor-onboarding-flow"
+import { VendorOnboardingFlow } from "@/components/vendor/vendor-onboarding-flow"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"

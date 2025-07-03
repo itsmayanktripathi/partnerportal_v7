@@ -1,4 +1,4 @@
-import { BulkDealUpload } from "@/components/bulk-deal-upload"
+import { BulkDealUpload } from "@/components/cost-deal/bulk-deal-upload"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"

@@ -1,4 +1,4 @@
-import { UserManagement } from "@/components/user-management"
+import { UserManagement } from "@/components/admin/user-management"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Plus } from "lucide-react"
 import Link from "next/link"

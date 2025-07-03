@@ -1,4 +1,4 @@
-import { AddCustomerForm } from "@/components/add-customer-form"
+import { AddCustomerForm } from "@/components/customer/add-customer-form"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"

@@ -1,4 +1,4 @@
-import { VendorDetails } from "@/components/vendor-details"
+import { VendorDetails } from "@/components/vendor/vendor-details"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Edit } from "lucide-react"
 import Link from "next/link"

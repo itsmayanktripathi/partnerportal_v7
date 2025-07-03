@@ -1,5 +1,5 @@
-import { CustomerSearch } from "@/components/customer-search"
-import { CustomerList } from "@/components/customer-list"
+import { CustomerSearch } from "@/components/customer/customer-search"
+import { CustomerList } from "@/components/customer/customer-list"
 import { Button } from "@/components/ui/button"
 import { Plus, Upload } from "lucide-react"
 import Link from "next/link"

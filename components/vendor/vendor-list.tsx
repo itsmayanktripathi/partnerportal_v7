@@ -1,114 +1,41 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, Eye, Edit, Trash2, Mail, Phone, Building2 } from "lucide-react"
+import { MoreHorizontal, Eye, Edit, Trash2, Mail, Phone, Building2, Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { vendorApi } from "@/lib/api"
 
-// Mock data - in real app this would come from API
-const vendors = [
-  {
-    id: "1",
-    companyName: "ABC Supply Co.",
-    contactPerson: "John Smith",
-    email: "john@abcsupply.com",
-    phone: "+1 (555) 123-4567",
-    businessType: "Manufacturer",
-    status: "active",
-    paymentTerms: "Net 30",
-    creditLimit: 50000,
-    lastActivity: "2024-01-15",
-    proposalsCount: 12,
-    location: "New York, NY",
-    description: "Leading manufacturer of industrial supplies and equipment",
-    joinedDate: "2023-03-15",
-  },
-  {
-    id: "2",
-    companyName: "Global Distributors Inc.",
-    contactPerson: "Sarah Johnson",
-    email: "sarah@globaldist.com",
-    phone: "+1 (555) 987-6543",
-    businessType: "Distributor",
-    status: "active",
-    paymentTerms: "Net 15",
-    creditLimit: 75000,
-    lastActivity: "2024-01-14",
-    proposalsCount: 8,
-    location: "Los Angeles, CA",
-    description: "International distribution network for premium products",
-    joinedDate: "2023-01-20",
-  },
-  {
-    id: "3",
-    companyName: "Premium Foods LLC",
-    contactPerson: "Mike Chen",
-    email: "mike@premiumfoods.com",
-    phone: "+1 (555) 456-7890",
-    businessType: "Supplier",
-    status: "pending",
-    paymentTerms: "Net 45",
-    creditLimit: 25000,
-    lastActivity: "2024-01-10",
-    proposalsCount: 3,
-    location: "Chicago, IL",
-    description: "Specialty food supplier with organic certifications",
-    joinedDate: "2024-01-01",
-  },
-  {
-    id: "4",
-    companyName: "Tech Solutions Pro",
-    contactPerson: "Emily Davis",
-    email: "emily@techsolutions.com",
-    phone: "+1 (555) 321-0987",
-    businessType: "Service Provider",
-    status: "inactive",
-    paymentTerms: "Net 30",
-    creditLimit: 15000,
-    lastActivity: "2023-12-28",
-    proposalsCount: 0,
-    location: "Austin, TX",
-    description: "Technology solutions and consulting services",
-    joinedDate: "2023-06-10",
-  },
-  {
-    id: "5",
-    companyName: "Eco Materials Corp",
-    contactPerson: "David Wilson",
-    email: "david@ecomaterials.com",
-    phone: "+1 (555) 654-3210",
-    businessType: "Manufacturer",
-    status: "active",
-    paymentTerms: "Net 30",
-    creditLimit: 40000,
-    lastActivity: "2024-01-13",
-    proposalsCount: 6,
-    location: "Portland, OR",
-    description: "Sustainable building materials and eco-friendly products",
-    joinedDate: "2023-08-15",
-  },
-  {
-    id: "6",
-    companyName: "Quality Imports Ltd",
-    contactPerson: "Lisa Rodriguez",
-    email: "lisa@qualityimports.com",
-    phone: "+1 (555) 789-0123",
-    businessType: "Wholesaler",
-    status: "active",
-    paymentTerms: "Net 15",
-    creditLimit: 60000,
-    lastActivity: "2024-01-16",
-    proposalsCount: 15,
-    location: "Miami, FL",
-    description: "International import/export with focus on quality goods",
-    joinedDate: "2023-04-22",
-  },
-]
+// Vendor interface matching the backend model
+interface Vendor {
+  id: number
+  companyName: string
+  contactPerson: string
+  email: string
+  phone: string
+  alternatePhone?: string
+  website?: string
+  taxId?: string
+  businessType?: string
+  address?: string
+  city?: string
+  state?: string
+  zipCode?: string
+  country?: string
+  businessDescription?: string
+  productsServices?: string
+  certifications?: string
+  paymentTerms?: string
+  creditLimit?: string
+  isActive: boolean
+  allowProposals: boolean
+  requireApproval: boolean
+}
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -133,10 +60,67 @@ const getInitials = (name: string) => {
 
 export function VendorList() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
+  const [vendors, setVendors] = useState<Vendor[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const router = useRouter()
 
-  const handleVendorDoubleClick = (vendorId: string) => {
+  useEffect(() => {
+    const fetchVendors = async () => {
+      try {
+        setLoading(true)
+        const data = await vendorApi.getAll()
+        setVendors(data)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch vendors')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchVendors()
+  }, [])
+
+  const handleVendorDoubleClick = (vendorId: number) => {
     router.push(`/dashboard/vendors/${vendorId}`)
+  }
+
+  // Helper function to get status from isActive
+  const getVendorStatus = (vendor: Vendor) => {
+    return vendor.isActive ? "active" : "inactive"
+  }
+
+  // Helper function to format credit limit
+  const formatCreditLimit = (creditLimit: string | undefined) => {
+    if (!creditLimit) return "$0"
+    const num = parseFloat(creditLimit)
+    return isNaN(num) ? "$0" : `$${num.toLocaleString()}`
+  }
+
+  // Helper function to get location
+  const getLocation = (vendor: Vendor) => {
+    const parts = [vendor.city, vendor.state, vendor.country].filter(Boolean)
+    return parts.length > 0 ? parts.join(", ") : "Location not specified"
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="h-8 w-8 animate-spin" />
+        <span className="ml-2">Loading vendors...</span>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">Error: {error}</p>
+          <Button onClick={() => window.location.reload()}>Retry</Button>
+        </div>
+      </div>
+    )
   }
 
   if (viewMode === "list") {
@@ -175,7 +159,7 @@ export function VendorList() {
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
                         <h3 className="text-lg font-semibold">{vendor.companyName}</h3>
-                        <Badge className={getStatusColor(vendor.status)}>{vendor.status}</Badge>
+                        <Badge className={getStatusColor(getVendorStatus(vendor))}>{getVendorStatus(vendor)}</Badge>
                       </div>
 
                       <p className="text-sm text-muted-foreground">Contact: {vendor.contactPerson}</p>
@@ -231,15 +215,15 @@ export function VendorList() {
                   <div className="flex items-center gap-6 text-sm">
                     <div>
                       <span className="text-muted-foreground">Credit Limit: </span>
-                      <span className="font-medium">${vendor.creditLimit.toLocaleString()}</span>
+                      <span className="font-medium">{formatCreditLimit(vendor.creditLimit)}</span>
                     </div>
                     <div>
-                      <span className="text-muted-foreground">Active Proposals: </span>
-                      <span className="font-medium">{vendor.proposalsCount}</span>
+                      <span className="text-muted-foreground">Business Type: </span>
+                      <span className="font-medium">{vendor.businessType || "Not specified"}</span>
                     </div>
                     <div>
-                      <span className="text-muted-foreground">Last Activity: </span>
-                      <span className="font-medium">{vendor.lastActivity}</span>
+                      <span className="text-muted-foreground">Payment Terms: </span>
+                      <span className="font-medium">{vendor.paymentTerms || "Not specified"}</span>
                     </div>
                   </div>
                 </div>
@@ -286,7 +270,7 @@ export function VendorList() {
                     </Avatar>
                     <div className="space-y-1 flex-1">
                       <h3 className="font-semibold text-sm leading-tight line-clamp-2">{vendor.companyName}</h3>
-                      <Badge className={`${getStatusColor(vendor.status)} text-xs`}>{vendor.status}</Badge>
+                      <Badge className={`${getStatusColor(getVendorStatus(vendor))} text-xs`}>{getVendorStatus(vendor)}</Badge>
                     </div>
                   </div>
                   <DropdownMenu>
@@ -343,28 +327,26 @@ export function VendorList() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Location:</span>
-                    <span className="font-medium">{vendor.location}</span>
+                    <span className="font-medium">{getLocation(vendor)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Credit Limit:</span>
-                    <span className="font-bold text-green-600">${vendor.creditLimit.toLocaleString()}</span>
+                    <span className="font-bold text-green-600">{formatCreditLimit(vendor.creditLimit)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Proposals:</span>
-                    <span className={`font-medium ${vendor.proposalsCount > 0 ? "text-blue-600" : "text-gray-500"}`}>
-                      {vendor.proposalsCount}
-                    </span>
+                    <span className="text-muted-foreground">Payment Terms:</span>
+                    <span className="font-medium">{vendor.paymentTerms || "Not specified"}</span>
                   </div>
                 </div>
 
                 {/* Description */}
-                <p className="text-xs text-muted-foreground line-clamp-2">{vendor.description}</p>
+                <p className="text-xs text-muted-foreground line-clamp-2">{vendor.businessDescription || "No description available"}</p>
 
                 {/* Footer */}
                 <div className="pt-2 border-t">
                   <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>Joined: {vendor.joinedDate}</span>
-                    <span>Active: {vendor.lastActivity}</span>
+                    <span>Status: {getVendorStatus(vendor)}</span>
+                    <span>Proposals: {vendor.allowProposals ? "Allowed" : "Not allowed"}</span>
                   </div>
                 </div>
               </div>

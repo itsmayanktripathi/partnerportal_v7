@@ -1,4 +1,4 @@
-import { Parameterization } from "@/components/parameterization"
+import { Parameterization } from "@/components/admin/parameterization"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"

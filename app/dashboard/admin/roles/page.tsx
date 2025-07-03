@@ -1,4 +1,4 @@
-import { RoleManagement } from "@/components/role-management"
+import { RoleManagement } from "@/components/admin/role-management"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Plus } from "lucide-react"
 import Link from "next/link"

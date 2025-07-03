@@ -1,4 +1,4 @@
-import { CostDealDashboard } from "@/components/cost-deal-dashboard"
+import { CostDealDashboard } from "@/components/cost-deal/cost-deal-dashboard"
 import { Button } from "@/components/ui/button"
 import { Upload, DollarSign, Percent } from "lucide-react"
 import Link from "next/link"

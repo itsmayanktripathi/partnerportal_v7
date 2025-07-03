@@ -1,5 +1,5 @@
-import { DashboardCards } from "@/components/dashboard-cards"
-import { RecentActivity } from "@/components/recent-activity"
+import { DashboardCards } from "@/components/shared/dashboard-cards"
+import { RecentActivity } from "@/components/shared/recent-activity"
 
 export default function DashboardPage() {
   return (

@@ -1,4 +1,4 @@
-import { DealManagement } from "@/components/deal-management"
+import { DealManagement } from "@/components/cost-deal/deal-management"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"

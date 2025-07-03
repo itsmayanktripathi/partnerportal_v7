@@ -1,6 +1,6 @@
 import type React from "react"
 import { SidebarProvider } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/app-sidebar"
+import { AppSidebar } from "@/components/shared/app-sidebar"
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 
 export default function DashboardLayout({

@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { vendorApi } from "@/lib/api"
 
 interface VendorFormData {
   companyName: string
@@ -79,14 +80,7 @@ export function AddVendorForm() {
     e.preventDefault()
     setIsLoading(true)
     try {
-      const response = await fetch('http://localhost:8000/vendors', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      })
-      if (!response.ok) {
-        throw new Error('Failed to add vendor')
-      }
+      await vendorApi.create(formData)
       setIsLoading(false)
       router.push('/dashboard/vendors')
     } catch (error) {

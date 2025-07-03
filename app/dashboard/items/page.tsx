@@ -1,5 +1,5 @@
-import { ItemSearch } from "@/components/item-search"
-import { ItemGrid } from "@/components/item-grid"
+import { ItemSearch } from "@/components/item/item-search"
+import { ItemGrid } from "@/components/item/item-grid"
 import { Button } from "@/components/ui/button"
 import { Plus, Upload } from "lucide-react"
 import Link from "next/link"

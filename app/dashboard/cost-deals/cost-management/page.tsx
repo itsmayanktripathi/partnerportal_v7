@@ -1,4 +1,4 @@
-import { CostManagement } from "@/components/cost-management"
+import { CostManagement } from "@/components/cost-deal/cost-management"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"

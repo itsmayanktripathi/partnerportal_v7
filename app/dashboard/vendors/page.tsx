@@ -1,5 +1,5 @@
-import { VendorList } from "@/components/vendor-list"
-import { VendorFilters } from "@/components/vendor-filters"
+import { VendorList } from "@/components/vendor/vendor-list"
+import { VendorFilters } from "@/components/vendor/vendor-filters"
 import { Button } from "@/components/ui/button"
 import { Plus, Upload } from "lucide-react"
 import Link from "next/link"

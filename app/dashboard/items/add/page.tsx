@@ -1,4 +1,4 @@
-import { AddItemTabs } from "@/components/add-item-tabs"
+import { AddItemTabs } from "@/components/item/add-item-tabs"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"

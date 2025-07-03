@@ -1,4 +1,4 @@
-import { CustomerOnboardingFlow } from "@/components/customer-onboarding-flow"
+import { CustomerOnboardingFlow } from "@/components/customer/customer-onboarding-flow"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"

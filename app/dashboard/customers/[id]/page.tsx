@@ -1,4 +1,4 @@
-import { CustomerDetails } from "@/components/customer-details"
+import { CustomerDetails } from "@/components/customer/customer-details"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Edit } from "lucide-react"
 import Link from "next/link"

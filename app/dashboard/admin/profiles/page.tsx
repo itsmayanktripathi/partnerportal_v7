@@ -1,4 +1,4 @@
-import { ProfileManagement } from "@/components/profile-management"
+import { ProfileManagement } from "@/components/admin/profile-management"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
