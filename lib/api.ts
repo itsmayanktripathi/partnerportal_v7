@@ -1,4 +1,4 @@
-import { buildApiUrl, API_ENDPOINTS, config } from './config';
+import { buildApiUrl, API_ENDPOINTS, config, getApiV1Url } from './config';
 
 // Common headers for API requests
 const getDefaultHeaders = (): HeadersInit => ({
@@ -61,19 +61,19 @@ export const authenticatedApiRequest = async <T = any>(
 export const vendorApi = {
   // Get all vendors
   getAll: async (params?: Record<string, string>) => {
-    const url = buildApiUrl('vendors', 'list', params);
+    const url = getApiV1Url('vendors');
     return apiRequest(url);
   },
 
   // Get vendor by ID
   getById: async (id: string) => {
-    const url = buildApiUrl('vendors', 'get', { id });
+    const url = getApiV1Url(`vendors/${id}`);
     return apiRequest(url);
   },
 
   // Create new vendor
   create: async (data: any) => {
-    const url = buildApiUrl('vendors', 'create');
+    const url = getApiV1Url('vendors');
     return apiRequest(url, {
       method: 'POST',
       body: JSON.stringify(data),
@@ -82,7 +82,7 @@ export const vendorApi = {
 
   // Update vendor
   update: async (id: string, data: any) => {
-    const url = buildApiUrl('vendors', 'update', { id });
+    const url = getApiV1Url(`vendors/${id}`);
     return apiRequest(url, {
       method: 'PUT',
       body: JSON.stringify(data),
@@ -91,7 +91,7 @@ export const vendorApi = {
 
   // Delete vendor
   delete: async (id: string) => {
-    const url = buildApiUrl('vendors', 'delete', { id });
+    const url = getApiV1Url(`vendors/${id}`);
     return apiRequest(url, {
       method: 'DELETE',
     });
@@ -99,7 +99,7 @@ export const vendorApi = {
 
   // Onboard vendor
   onboard: async (data: any) => {
-    const url = buildApiUrl('vendors', 'onboard');
+    const url = getApiV1Url('vendors/onboard');
     return apiRequest(url, {
       method: 'POST',
       body: JSON.stringify(data),

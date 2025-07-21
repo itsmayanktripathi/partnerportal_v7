@@ -3,5 +3,5 @@ uvicorn
 sqlalchemy
 pydantic
 pydantic-settings
-mysql-connector-python
+oracledb
 python-dotenv 

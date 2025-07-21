@@ -18,11 +18,11 @@ class Settings(BaseSettings):
     DEBUG: bool = os.getenv("DEBUG", "True").lower() == "true"
     
     # Database Configuration
-    DB_USER: str = os.getenv("MYSQL_USER", "root")
-    DB_PASSWORD: str = os.getenv("MYSQL_PASSWORD", "rootpwd01")
-    DB_HOST: str = os.getenv("MYSQL_HOST", "localhost")
-    DB_PORT: str = os.getenv("MYSQL_PORT", "3306")
-    DB_NAME: str = os.getenv("MYSQL_DB", "partner_portal")
+    DB_USER: str = os.getenv("ORACLE_USER", "VP")
+    DB_PASSWORD: str = os.getenv("ORACLE_PASSWORD", "VP")
+    DB_HOST: str = os.getenv("ORACLE_HOST", "100.92.185.71")
+    DB_PORT: str = os.getenv("ORACLE_PORT", "1521")
+    DB_NAME: str = os.getenv("ORACLE_DB", "XEPDB1")
     
     # CORS Configuration
     CORS_ORIGINS: List[str] = [
@@ -60,7 +60,7 @@ class Settings(BaseSettings):
     
     @property
     def DATABASE_URL(self) -> str:
-        return f"mysql+mysqlconnector://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+        return f"oracle+oracledb://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/?service_name={self.DB_NAME}"
     
     @property
     def API_BASE_URL(self) -> str:

@@ -70,7 +70,7 @@ export const getApiUrl = (endpoint: string): string => {
 };
 
 export const getApiV1Url = (endpoint: string): string => {
-  return getApiUrl(`${config.apiVersion}/${endpoint}`);
+  return getApiUrl(`api/${config.apiVersion}/${endpoint}`);
 };
 
 // Common API endpoints
